@@ -1,0 +1,55 @@
+{
+  "alpha": {
+    "sizes": [
+      2,
+      2,
+      1
+    ],
+    "layers": [
+      {
+        "yPos": {},
+        "yBall": {}
+      },
+      {
+        "0": {
+          "bias": 0.32219943404197693,
+          "weights": {
+            "yPos": -1.5218586921691895,
+            "yBall": -0.7342714071273804
+          }
+        },
+        "1": {
+          "bias": 1.5430991649627686,
+          "weights": {
+            "yPos": -2.551118850708008,
+            "yBall": -0.9407645463943481
+          }
+        }
+      },
+      {
+        "direction": {
+          "bias": -1.1385186910629272,
+          "weights": {
+            "0": 1.7796298265457153,
+            "1": 3.3503541946411133
+          }
+        }
+      }
+    ],
+    "outputLookup": true,
+    "inputLookup": true,
+    "activation": "sigmoid",
+    "trainOpts": {
+      "iterations": 20000,
+      "errorThresh": 0.005,
+      "log": false,
+      "logPeriod": 10,
+      "learningRate": 0.3,
+      "momentum": 0.1,
+      "callbackPeriod": 10,
+      "beta1": 0.9,
+      "beta2": 0.999,
+      "epsilon": 1e-8
+    }
+  }
+}
