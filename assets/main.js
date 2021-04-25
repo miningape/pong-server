@@ -1,28 +1,5 @@
- /** TODO:
- * Raytracing collisions?
- * 
- * Add points system
- * Add unitvector(vel)*speed on every bounce [x]
- * Multiply speed by a bit for every bounce [x]
- * 
- * Different locations on paddle = different angle
- * 
- * Add max rounds system (maybe not yet)
- * Add multiple games at once (would allow for faster training) color could differentiate [x]
- * 
- * Add AI to train
- * Actually train
- * 
- * Save/Load trained model
- * 
- * maybe menu screens
- */
-
-/** CHANGELOG:
- * Changed pos, and velocity to vectors
- */
-let WIDTH  = 560;
-let HEIGHT = 420;
+let WIDTH  = screenDimensions[0];
+let HEIGHT = screenDimensions[1];
 
 //let theBall;
 //let playerPaddle;
@@ -53,7 +30,7 @@ button.addEventListener('click', () => {
 // Load JSON from saved file
 $.getJSON('../data', (data) => {
   loadedJSON = data;
-  console.log(loadedJSON)
+  //console.log(loadedJSON)
 })
 
 class game{
@@ -63,7 +40,7 @@ class game{
 
     this.ball = new ball();
     this.paddles = [new paddle( 10, player ), new paddle( WIDTH-20 )];
-    this.brains = [new neural(this.name+' left'), new neural(this.name+' right')];
+    this.brains = [new neural(this.name+' left'), new neural(this.name+' right', player ? loadedJSON[loadwhich] : null)];
     this.scores = [{score:0, hits:0}, {score:0, hits:0}]
 
     this.paddleFlagMap = new Map();

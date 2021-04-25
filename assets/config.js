@@ -4,14 +4,21 @@ const typesEnum = Object.freeze({
   'pit': 2   // Unimplemented
 })
 
-let gameType = typesEnum.train
-let loadwhich = ''
+const gameType = typesEnum.train
+const loadwhich = ''
 
-let gameInfo = [
+const gameInfo = [
   ['blue', '#6577B3'],
   ['red', '#d61a3c'],
   ['white', '#f5f0f0'],
   ['yellow', '#ffe338'],
   ['green', '#48A14D'],
   ]
+
+//                       Width, Height
+const screenDimensions = [ 560, 420 ];
+
+// Neural Network Structure of hidden layers
+const netStructure = [2]
+
 

@@ -3,7 +3,7 @@ let nam = 0;
 class neural {
   constructor( name, JSON ) {
     this.net = new brain.NeuralNetwork({
-      hiddenLayers:[2],
+      hiddenLayers:netStructure,
     });
     this.name = name;
 
