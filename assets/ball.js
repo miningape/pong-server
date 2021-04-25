@@ -2,7 +2,7 @@ randArray = [-2,-1,1,2]
 
 class ball{
   // Default values spawn of screen causing automatic reset on next frame
-  constructor(x=WIDTH/2, y=HEIGHT/2, xSpeed=random(randArray), ySpeed=random([...randArray, 0])) {
+  constructor(x=WIDTH/2, y=HEIGHT/2, xSpeed=random(randArray), ySpeed=random([...randArray, 0, 0, 0, 0, 0, 0])) {
     //this.x = x;
     //this.y = y;
     this.pos = new p5.Vector(x, y);
@@ -181,7 +181,7 @@ class ball{
 
     this.speed = this.INITIAL_SPEED;
     this.pos.set(WIDTH/2, HEIGHT/2);
-    this.vel.set(random(randArray), random([...randArray,0])).normalize();
+    this.vel.set(random(randArray), random([...randArray, 0, 0, 0, 0, 0, 0])).normalize();
   }
 
   draw() {

@@ -137,6 +137,10 @@ function mutate( neural ) {
         break;
     } 
   }
+
+  if (random() < 0.15) {
+    JSON = undefined;
+  }
   
   //completely replace it with a new random value
   //change the weight by some percentage. (multiply the weight by some random number between 0 and 2 - practically speaking we would tend to constrain that a bit and multiply it by a random number between 0.5 and 1.5. This has the effect of scaling the weight so that it doesn't change as radically. You could also do this kind of operation by scaling all the weights of a particular neuron.
