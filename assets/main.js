@@ -14,29 +14,27 @@ let named = document.querySelector('#saveName')
 let currentBest;
 let currentBestFitness;
 let loadedJSON = {};
-let generations = 1;
+let generations = 0;
 
 // Save JSON to file
 button.addEventListener('click', () => {
   $.ajax({
+    // Server URI is /save/:name/:json
         url: '../save/'+named.value+'/'+JSON.stringify(currentBest.net.toJSON()),
-        type: 'get',
+        type: 'get',  // HTTP method really doesnt matter too much in this case
         data: null,
         success: function(){
         }
     });
 });
 
-// Load JSON from saved file
-$.getJSON('../data', (data) => {
-  loadedJSON = data;
-  //console.log(loadedJSON)
-})
 
 class game{
   constructor(color, name, player=false){
     this.color = color;
     this.name = name;
+
+    console.log(loadedJSON, loadwhich)
 
     this.ball = new ball();
     this.paddles = [new paddle( 10, player ), new paddle( WIDTH-20 )];
@@ -92,138 +90,15 @@ class game{
   }
 }
 
-function crossover( neural1, neural2 ) {
-  let JSON1 = neural1.net.toJSON();
-  let JSON2 = neural2.net.toJSON();
-  let rtnJSON = JSON1;
-  let sizes = JSON1.sizes;
-
-  //console.log( JSON1, JSON2, rtnJSON );
-
-  // Swap single weight
-  // Swap single bias
-  // Swap all on one layer
-  // Swap some
-
-  let r_value = random();
-  // Swap all neurons in a layer
-
-  // Swap all biases in a layer
-let layer = Math.floor( random() * 2 ) + 1;
-      //let neuron = Math.floor( random() * sizes[layer] )
-      // Iterate through each neuron in random layer
-      let neuron_keys = Object.keys(JSON1.layers[layer]).map(str => /[0-9]/.test(str) ? parseInt(str) : str);
-
-  // Swap all weights on one layer
-  switch ( random(0,3) ) {
-    case 0:
-      neuron_keys.forEach( n_key => {
-        let weight_keys = Object.keys(JSON1.layers[layer][n_key].weights).map(str => /[0-9]/.test(str) ? parseInt(str) : str);
-
-        //console.log('weights:', n_key, JSON1.layers[layer][n_key])
-        // Iterate through each weight on that neuron
-        weight_keys.forEach(w_key => {
-          // 50/50 of wapping weight
-          if ( random() > 0.5 ) {
-            rtnJSON.layers[layer][n_key].weights[w_key] = JSON2.layers[layer][n_key].weights[w_key];
-          }
-        });
-      });
-      break;
-
-    // Swap all neurons
-    case 1:
-      neuron_keys.forEach( n_key => {
-        if (random() > 0.5) {
-          rtnJSON.layers[layer][n_key] = JSON2.layers[layer][n_key];
-        }
-      } );
-      break;
-    
-    // Swap all biases
-    case 2:
-      neuron_keys.forEach( n_key => {
-        if (random() > 0.5) {
-          rtnJSON.layers[layer][n_key].bias = JSON2.layers[layer][n_key].bias;
-        }
-      } );
-      break;
-    
-    // swap random amount of weights
-    // swap random amount of bias
-    // swap random amount of neuron
-    // swap one weight
-    // swap one bias
-    // swap one neuron
-  }
-
-  return rtnJSON;
-}
-
-function mutate( neural ) {
-  let JSON = neural;//neural.net.toJSON();
-  let sizes = JSON.sizes;
-
-  let layer = Math.floor( random() * 2 ) + 1;
-  let neuron = Math.floor( random() * sizes[layer] );
-  neuron = Object.keys(JSON.layers[layer]).map(str => /[0-9]/.test(str) ? parseInt(str) : str)[neuron];
-  let weight_keys = Object.keys(JSON.layers[layer][neuron].weights).map(str => /[0-9]/.test(str) ? parseInt(str) : str);
-  let weight = random(weight_keys);
-
-  //console.log('New network:', JSON)
-
-  // 10% chance to mutate
-  if ( random() < 0.2 ) {
-    switch( Math.floor(random(0,10)) ) {
-      // Replace with rand
-      case 0:
-      case 1:
-        JSON.layers[layer][neuron].weights[weight] *= random(0.5, 1.5);
-        break;
-      case 2:
-        JSON.layers[layer][neuron].weights[weight] = random(-1.5, 1.5);
-        break;
-      case 3:
-        JSON.layers[layer][neuron].weights[weight] *= -1;
-        break;
-      case 4:
-        JSON.layers[layer][neuron].weights[weight] += random(-1, 1);
-        break;
-      case 5:
-        JSON.layers[layer][neuron].bias = random(-1.5, 1.5);
-        break;
-      case 6:
-      case 7:
-        JSON.layers[layer][neuron].bias *= random(0.5, 1.5);
-        break;
-      case 8:
-        JSON.layers[layer][neuron].bias += random(-1, 1);
-        break;
-      case 9:
-        JSON.layers[layer][neuron].bias *= -1;
-        break;
-      default:
-        console.log('Weird unaccountedfor mutation number');
-        break;
-    } 
-
-    return JSON;
-  }
-  
-  //completely replace it with a new random value
-  //change the weight by some percentage. (multiply the weight by some random number between 0 and 2 - practically speaking we would tend to constrain that a bit and multiply it by a random number between 0.5 and 1.5. This has the effect of scaling the weight so that it doesn't change as radically. You could also do this kind of operation by scaling all the weights of a particular neuron.
-  //add or subtract a random number between 0 and 1 to/from the weight.
-  //Change the sign of a weight.
-  //swap weights on a single neuron.
-
-}
 
 function setup() {
+  noLoop();
   let c = createCanvas(WIDTH, HEIGHT);
   c.parent( 'container' )
   rectMode(CORNER);
   ellipseMode(CENTER);
   frameRate(60)
+  
   //so basically what i changed was we can now call
   // theBall = new ball(100, 200, 2, 0);
   // For random start
@@ -233,21 +108,29 @@ function setup() {
   //paddles.push( new paddle( WIDTH-20, 73, 75 ) );
 
   //paddleFlagMap.set( paddles[0], false );
-  //paddleFlagMap.set( paddles[1], false );
+  //paddleFlagMap.set( paddles[1], false );\
 
-  switch (gameType) {
-    case typesEnum.train:
-      gameInfo.forEach( info => {
-        games.push( new game( info[1], info[0] ) );
-      } )
-      break;
-    case typesEnum.play:
-      games.push( new game( '#f5f0f0', 'Man Vs. Machine', true ) )
-      break;
-    default:
-      alert('unimplemented')
-      break;
-  }
+  // Load JSON from saved file
+  $.getJSON('/data', (data) => {
+    loadedJSON = data;
+    console.log(loadedJSON)
+  }).done( () => {
+    // Then setup the games
+    switch (gameType) {
+      case typesEnum.train:
+        gameInfo.forEach( info => {
+          games.push( new game( info[1], info[0] ) );
+        } )
+        break;
+      case typesEnum.play:
+        games.push( new game( '#f5f0f0', 'Man Vs. Machine', true ) )
+        break;
+      default:
+        alert('unimplemented')
+        break;
+    }
+    loop();
+  })
 }
 
 function draw() {
@@ -287,7 +170,7 @@ function draw() {
         if (game.scores[i].hits > 0){
         population.push( {
           network: game.brains[i],
-          fitness: (game.scores[i].score ) + game.scores[i].hits/10 + (Math.max(game.scores[1-i].score - game.scores[i].score, 0) *2)
+          fitness: ( game.scores[i].score ) * 2 + game.scores[i].hits/10 + (Math.max(game.scores[1-i].score - game.scores[i].score, 0) *2)
         } );
         } else {
         population.push( {
@@ -298,6 +181,7 @@ function draw() {
       }
     });
 
+    // Push previous best into the population
     if (currentBest) {
     population.push({
       network: currentBest,

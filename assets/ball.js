@@ -88,9 +88,6 @@ class ball{
    * c= (y4-y3)/(x4-x3)
    * d= y3-(c*x3)
    */
-  intersect( v1, v2 ) {
-
-  }
 
   update( game ) {
     //this.x += this.xSpeed;

@@ -53,11 +53,11 @@ class paddle {
         let output = aBrain.net.run(
           {
             yPos:this.y/HEIGHT, 
-            //xBall:gameObj.ball.pos.x/WIDTH, 
+            xBall:gameObj.ball.pos.x/WIDTH, 
             yBall:gameObj.ball.pos.y/HEIGHT, 
-            //xVel:gameObj.ball.vel.x/4,
-            //yVel:gameObj.ball.vel.y/4,
-            //mag: gameObj.ball.speed/20
+            xVel:gameObj.ball.vel.x/2,
+            yVel:gameObj.ball.vel.y/3,
+            mag: gameObj.ball.speed/20
           }
         );
         

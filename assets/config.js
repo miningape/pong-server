@@ -4,21 +4,33 @@ const typesEnum = Object.freeze({
   'pit': 2   // Unimplemented
 })
 
-const gameType = typesEnum.train
-const loadwhich = ''
-
-const gameInfo = [
-  ['blue', '#6577B3'],
-  ['red', '#d61a3c'],
-  ['white', '#f5f0f0'],
-  ['yellow', '#ffe338'],
-  ['green', '#48A14D'],
-  ]
-
+//Dimensions of the Canvas (currently 4:3 AR) 
 //                       Width, Height
 const screenDimensions = [ 560, 420 ];
 
-// Neural Network Structure of hidden layers
+// Which type of game you want (must be from typesEnum if you want it to work)
+const gameType = typesEnum.train
+
+// If the play enum is selected this is the name of the network that is loaded to play against
+const loadwhich = 'gen100'
+
+// These are the games that will be created for training, 2 networks per game
+const gameInfo = [
+// [name   ,    color]
+  ['blue'  , '#6577B3'],
+  ['red'   , '#d61a3c'],
+  ['white' , '#f5f0f0'],
+  ['yellow', '#ffe338'],
+  ['green' , '#48A14D']]
+
+// Neural Network Structure of hidden layers (only needed for training)
 const netStructure = [2]
+
+// These are what the input layer for a network contains
+// They can include: 'yPos', 'xBall', 'yBall', 'xVel', 'yVel', 'mag'
+const netInputs = ['yPos', 'yBall']
+
+// The number of datasets (with random data) that are used for training a brand new network
+const randomTraining = 3;
 
 
