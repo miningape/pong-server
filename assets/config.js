@@ -12,7 +12,8 @@ const screenDimensions = [ 560, 420 ];
 const gameType = typesEnum.train
 
 // If the play enum is selected this is the name of the network that is loaded to play against
-const loadwhich = 'gen100'
+// Possible opponents: easy, medium, gen100, gen120, max100
+const loadwhich = 'easy'
 
 // These are the games that will be created for training, 2 networks per game
 const gameInfo = [
@@ -24,11 +25,11 @@ const gameInfo = [
   ['green' , '#48A14D']]
 
 // Neural Network Structure of hidden layers (only needed for training)
-const netStructure = [6, 2]
+const netStructure = [2]
 
 // These are what the input layer for a network contains
 // They can include: 'yPos', 'xBall', 'yBall', 'xVel', 'yVel', 'mag'
-const netInputs = ['yPos', 'xBall', 'yBall', 'xVel', 'yVel', 'mag']
+const netInputs = ['yPos', 'yBall']
 
 // The number of datasets (with random data) that are used for training a brand new network
 const randomTraining = 3;
