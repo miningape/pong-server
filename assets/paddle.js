@@ -72,13 +72,7 @@ class paddle {
 
     draw() {
         strokeWeight(0);
-        //fill('#f5f0f0');
-
-        // Code to see hitbox
-        //stroke(255,0,0)
-        //strokeWeight(1);
-        //rect(this.x, this.y, this.width, this.height);
-        //strokeWeight(0);
+        //fill('#f5f0f0')
         rect(this.x, this.y, this.width, this.height, 10);
     }
 

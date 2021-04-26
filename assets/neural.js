@@ -37,21 +37,10 @@ function crossover( neural1, neural2 ) {
   let rtnJSON = JSON1;
   let sizes = JSON1.sizes;
 
-  //console.log( JSON1, JSON2, rtnJSON );
-
-  // Swap single weight
-  // Swap single bias
-  // Swap all on one layer
-  // Swap some
-
   let r_value = random();
-  // Swap all neurons in a layer
-
-  // Swap all biases in a layer
-let layer = Math.floor( random() * 2 ) + 1;
-      //let neuron = Math.floor( random() * sizes[layer] )
-      // Iterate through each neuron in random layer
-      let neuron_keys = Object.keys(JSON1.layers[layer]).map(str => /[0-9]/.test(str) ? parseInt(str) : str);
+  
+  let layer = Math.floor( random() * 2 ) + 1;
+  let neuron_keys = Object.keys(JSON1.layers[layer]).map(str => /[0-9]/.test(str) ? parseInt(str) : str);
 
   // Swap all weights on one layer
   switch ( random(0,3) ) {

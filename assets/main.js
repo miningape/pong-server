@@ -98,17 +98,6 @@ function setup() {
   rectMode(CORNER);
   ellipseMode(CENTER);
   frameRate(60)
-  
-  //so basically what i changed was we can now call
-  // theBall = new ball(100, 200, 2, 0);
-  // For random start
-  //theBall = new ball();
-  //paddles.push( new paddle( 10 ) );
-  // I and K to move this othe rpaddle
-  //paddles.push( new paddle( WIDTH-20, 73, 75 ) );
-
-  //paddleFlagMap.set( paddles[0], false );
-  //paddleFlagMap.set( paddles[1], false );\
 
   // Load JSON from saved file
   $.getJSON('/data', (data) => {
@@ -143,6 +132,7 @@ function draw() {
     rect( (WIDTH / 2) - 2, ((i*HEIGHT)/20) + 7, WIDTH/105, HEIGHT/40 );
   }
 
+  // Draw game and update score
   let DONE_COUNTER = 0;
   scoreElem.innerHTML = 'Scores: ' + generations + '<br />'
   games.forEach(game => {
@@ -189,6 +179,7 @@ function draw() {
     })
     }
     
+    // Choose best from this round
     let c = 0;
     population.forEach( elem => {
       if ( elem.fitness > c && elem.network != currentBest ) {
@@ -199,33 +190,21 @@ function draw() {
     } )
 
     console.log(population)
-
-    // Number of networks: games.length * 2
-    // Code stolen from https://github.com/CodingTrain/Rainbow-Topics/issues/119
-    /*
-    // Reduce to maximum fitness
-    let total_fitness = population.reduce( (acc, cur) => acc + cur.fitness, 0 );
-
-    // Map values to weighted fitness
-    let weighted = population.map( cur => { 
-      return {
-        network: cur.network,
-        fitness: cur.fitness / total_fitness
-      }
-     } );*/
     
-    // Crossover networks
+    // Crossover and mutate networks
     games.forEach( game => {
       // Select networks and cross them over
       let JSON1 = mutate(crossover( select(population), select(population) ));
       let JSON2 = mutate(crossover( select(population), select(population) ));
 
+      // LOad neural networks into each game
       game.updateBrains( [
         new neural( game.name+' left', JSON1 ),
         new neural( game.name+' right',JSON2 )
       ] );
     } );
 
+    // Restart
     games.forEach(game => game.resetGame());
   }
   
@@ -251,20 +230,3 @@ const select = ( array ) => {
   } )
   return random(weighted);
 }
-
-/* Weird algorithm i found online
-const select = ( array ) => {
-  let r_value = random();
-  for ( let i = 0; i < array.length; i++ ) {
-    let value = array[i].network;
-    let weight = array[i].fitness;
-
-    if (r_value < weight){
-      console.log(value);
-       return value;
-    }
-    else r_value -= weight;
-  }
-  return null;
-}*/
-
