@@ -24,11 +24,11 @@ const gameInfo = [
   ['green' , '#48A14D']]
 
 // Neural Network Structure of hidden layers (only needed for training)
-const netStructure = [2]
+const netStructure = [6, 2]
 
 // These are what the input layer for a network contains
 // They can include: 'yPos', 'xBall', 'yBall', 'xVel', 'yVel', 'mag'
-const netInputs = ['yPos', 'yBall']
+const netInputs = ['yPos', 'xBall', 'yBall', 'xVel', 'yVel', 'mag']
 
 // The number of datasets (with random data) that are used for training a brand new network
 const randomTraining = 3;
