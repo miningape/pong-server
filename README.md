@@ -14,4 +14,4 @@ To run
 node index.js
 ```
 
-Server is hosted on localhost:3000 / 127.0.0.1
+Server is hosted on localhost:3000 / 127.0.0.1:3000
